@@ -9,9 +9,12 @@ function App() {
   const [name, setName] = useState("");
   const [cart, setCart] = useState([]);
 
+  // 👇 change this URL to your actual backend URL (Render/Vercel)
+  const BASE_URL = "https://clothing-management-app-1.onrender.com";
+
   useEffect(() => {
-    axios.get("http://localhost:5000/get").then(res => setUsers(res.data));
-    axios.get("http://localhost:5000/clothes").then(res => setClothes(res.data));
+    axios.get(`${BASE_URL}/get`).then(res => setUsers(res.data));
+    axios.get(`${BASE_URL}/clothes`).then(res => setClothes(res.data));
   }, []);
 
   const handleCheck = (item) => {
@@ -36,7 +39,7 @@ function App() {
   };
 
   const addUser = () => {
-    axios.post("http://localhost:5000/add", { id, name, cart })
+    axios.post(`${BASE_URL}/add`, { id, name, cart })
       .then(() => {
         alert("Added successfully");
         window.location.reload();
@@ -45,12 +48,12 @@ function App() {
 
   const updateCart = (uid) => {
     const user = users[uid];
-    axios.put(`http://localhost:5000/update/${user.id}`, { cart: user.cart })
+    axios.put(`${BASE_URL}/update/${user.id}`, { cart: user.cart })
       .then(() => alert("Cart updated successfully"));
   };
 
   const deleteUser = (uid) => {
-    axios.delete(`http://localhost:5000/delete/${uid}`)
+    axios.delete(`${BASE_URL}/delete/${uid}`)
       .then(() => {
         alert("Deleted successfully");
         window.location.reload();
